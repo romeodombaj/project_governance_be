@@ -2,10 +2,10 @@ const express = require("express");
 const { connectToDb, getDb } = require("./db");
 
 const app = express();
-//const cors = require("cors");
+const cors = require("cors");
 
-//app.use(cors());
-//app.use(express.json());
+app.use(cors());
+app.use(express.json());
 
 let db;
 
@@ -23,3 +23,9 @@ connectToDb((err) => {
 app.get("/", (req, res) => {
   res.json({ mssg: "hello" });
 });
+
+const employeeRouter = require("./routes/LineManagment/employees");
+const workGroupRouter = require("./routes/LineManagment/work_groups");
+
+app.use("/line_managment/employees", employeeRouter);
+app.use("/line_managment/work_groups", workGroupRouter);
