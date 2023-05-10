@@ -1,15 +1,13 @@
 const express = require("express");
-const { route } = require("./employees");
-const { getData, postData } = require("../../fetchData");
 const router = express.Router();
-
-const table = "work_groups";
+const { getData, postData } = require("../../fetchData");
+const table = "projects";
 
 router.get("/", (req, res) => {
   getData(req, res, table);
 });
 
-router.post("add", (req, res) => {
+router.post("/add", (req, res) => {
   postData(req, res, table);
 });
 

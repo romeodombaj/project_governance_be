@@ -1,21 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { getDb } = require("../../db");
+const { getData, postData } = require("../../fetchData");
+const table = "employees";
 
 router.get("/", (req, res) => {
-  const db = getDb();
-  let employees = [];
+  getData(req, res, table);
+});
 
-  db.collection("employees")
-    .find()
-    .forEach((employee) => employees.push(employee))
-    .then(() => {
-      res.status(200).json(employees);
-      console.log("data fetch");
-    })
-    .catch(() => {
-      res.status(500).json({ error: "Could not fetch the documents" });
-    });
+router.post("/add", (req, res) => {
+  postData(req, res, table);
 });
 
 module.exports = router;
