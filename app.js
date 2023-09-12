@@ -31,9 +31,10 @@ app.use("/line_managment/work_groups", workGroupRouter);
 
 // Project Managment
 const projectsRouter = require("./routes/ProjectManagment/projects");
+const criticalPathsRouter = require("./routes/ProjectManagment/criticalPaths");
 //
 app.use("/project_managment/projects", projectsRouter);
-
+app.use("/project_managment/critical_paths", criticalPathsRouter);
 
 // Process Managment
 const procesRouter = require("./routes/ProcessManagment/features");
