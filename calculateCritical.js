@@ -25,10 +25,6 @@ const calculateCriticalPath = async (originalArray) => {
   doneArray = late.doneArray;
   currentDuration = late.currentDuration;
 
-  console.log(late.activityArray);
-  console.log(late.doneArray);
-  console.log(late.currentDuration);
-
   return activityArray;
 };
 
@@ -39,7 +35,6 @@ const calculateEarlyTimes = async (
   doneArray,
   currentDuration
 ) => {
-  console.log(activityArray.length);
   const length = activityArray.length;
   // after first
 
@@ -143,13 +138,21 @@ const findLast = (array, maxEarlyTime, maxDuration) => {
         ...array[x],
         lastStartTime: maxDuration - array[x].duration,
         lastFinishTime: maxDuration,
+        deltaFinish: maxDuration - array[x].earlyFinishTime,
       };
       last.push(array[x]);
     }
   }
 
+  /*let criticalPath = Math.min(...last.map((el) => el.deltaFinish));
+  console.log("CRIT");
+  console.log(criticalPath);*/
+
   return last;
 };
+
+// critical path calculation
+const criticalPath = (array) => {};
 
 module.exports = {
   calculateCriticalPath: calculateCriticalPath,

@@ -21,8 +21,6 @@ const postData = async (req, res, table) => {
   const db = getDb();
   const data = req.body;
 
-  console.log("postin");
-
   db.collection(table)
     .insertOne(data)
     .then((result) => {

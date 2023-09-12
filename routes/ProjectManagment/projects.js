@@ -8,7 +8,20 @@ router.get("/", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
-  postData(req, res, table);
+  let data = req.body;
+  const date = new Date();
+  let currentDate = date.getDay() + "-";
+  currentDate += date.getMonth() + "-";
+  currentDate += date.getFullYear();
+
+  data = {
+    body: {
+      ...data,
+      creationDate: currentDate,
+    },
+  };
+
+  postData(data, res, table);
 });
 
 router.patch("/update/:id", (req, res) => {

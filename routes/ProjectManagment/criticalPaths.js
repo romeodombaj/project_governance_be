@@ -8,25 +8,37 @@ router.get("/", (req, res) => {
   getData(req, res, table);
 });
 
+router.get("/:id", (req, res) => {
+  const filter = req.params.id;
+
+  getData(req, res, table, { projectId: filter });
+});
+
 router.post("/add", async (req, res) => {
-  let originalArray = [
-    { i: 0, predecessors: [], duration: 4 },
-    { i: 1, predecessors: [0], duration: 7 },
-    { i: 2, predecessors: [1], duration: 3 },
-    { i: 3, predecessors: [1, 2], duration: 9 },
-    { i: 4, predecessors: [2], duration: 2 },
-  ];
+  const body = req.body;
+  let originalArray = [];
+
+  const projectId = body[0].projectId;
+
+  for (let x in body) {
+    originalArray.push({
+      featureId: body[x]._id,
+      i: body[x].name,
+      predecessors: [
+        ...body[x].conditions.split(",").filter((el) => el !== ""),
+      ],
+      duration: parseInt(body[x].duration),
+    });
+  }
 
   const calculatedArray = await calculateCriticalPath(originalArray);
 
-  console.log("CALCULATED");
-  console.log(calculatedArray);
-
-  res.status(200).json(calculatedArray);
+  await calculatedArray.reverse();
 
   const data = {
     body: {
-      calculatedArray,
+      projectId: projectId,
+      calculatedArray: calculatedArray,
     },
   };
 
