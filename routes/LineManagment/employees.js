@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getData, postData } = require("../../fetchData");
+const { getData, postData, deleteData } = require("../../fetchData");
 const table = "employees";
 
 router.get("/", (req, res) => {
@@ -9,6 +9,10 @@ router.get("/", (req, res) => {
 
 router.post("/add", (req, res) => {
   postData(req, res, table);
+});
+
+router.delete("/delete/:id", (req, res) => {
+  deleteData(req, res, table, req.params.id);
 });
 
 module.exports = router;
