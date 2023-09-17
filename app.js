@@ -26,17 +26,17 @@ app.get("/", (req, res) => {
 const employeeRouter = require("./routes/LineManagment/employees");
 const workGroupRouter = require("./routes/LineManagment/work_groups");
 //
-app.use("/line_managment/employees", employeeRouter);
-app.use("/line_managment/work_groups", workGroupRouter);
+app.use("/employees", employeeRouter);
+app.use("/work_groups", workGroupRouter);
 
 // Project Managment
 const projectsRouter = require("./routes/ProjectManagment/projects");
 const criticalPathsRouter = require("./routes/ProjectManagment/criticalPaths");
 //
-app.use("/project_managment/projects", projectsRouter);
-app.use("/project_managment/critical_paths", criticalPathsRouter);
+app.use("/projects", projectsRouter);
+app.use("/critical_paths", criticalPathsRouter);
 
 // Process Managment
 const procesRouter = require("./routes/ProcessManagment/features");
 //
-app.use("/process_managment/features", procesRouter);
+app.use("/features", procesRouter);
