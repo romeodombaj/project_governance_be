@@ -28,6 +28,8 @@ router.post("/add", async (req, res) => {
         ...body[x].conditions.split(",").filter((el) => el !== ""),
       ],
       duration: parseInt(body[x].duration),
+      skill: body[x].skill,
+      employees: body[x].employees,
     });
   }
 

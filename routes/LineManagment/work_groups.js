@@ -1,5 +1,5 @@
 const express = require("express");
-const { getData, postData, deleteData } = require("../../fetchData");
+const { getData, postData, deleteData, patchData } = require("../../fetchData");
 const router = express.Router();
 
 const table = "work_groups";
@@ -14,6 +14,10 @@ router.post("/add", (req, res) => {
 
 router.delete("/delete/:id", (req, res) => {
   deleteData(req, res, table, req.params.id);
+});
+
+router.patch("/update/:id", (req, res) => {
+  patchData(req, res, table, req.params.id);
 });
 
 module.exports = router;

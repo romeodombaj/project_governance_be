@@ -31,11 +31,35 @@ const postData = async (req, res, table) => {
     });
 };
 
+const postManyData = async (req, res, table) => {
+  const db = getDb();
+  const obj = req.body;
+
+  const data = await Object.values(obj);
+  console.log(data);
+
+  db.collection(table)
+    .insertMany(data, { ordered: true })
+    .then((result) => {
+      console.log("SUCESS");
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ err: "Could not add new" });
+    });
+};
+
 const patchData = (req, res, table, id) => {
   const db = getDb();
   const data = req.body;
 
+  if (data._id) {
+    delete data._id;
+  }
+
   if (ObjectId.isValid(id)) {
+    console.log("valid");
     db.collection(table)
       .updateOne({ _id: new ObjectId(id) }, { $set: data })
       .then((result) => {
@@ -74,4 +98,5 @@ module.exports = {
   postData: postData,
   patchData: patchData,
   deleteData: deleteData,
+  postManyData: postManyData,
 };

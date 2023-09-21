@@ -25,9 +25,11 @@ app.get("/", (req, res) => {
 // Line Managment
 const employeeRouter = require("./routes/LineManagment/employees");
 const workGroupRouter = require("./routes/LineManagment/work_groups");
+const positionRequestsRouter = require("./routes/LineManagment/position_requests");
 //
 app.use("/employees", employeeRouter);
 app.use("/work_groups", workGroupRouter);
+app.use("/position_requests", positionRequestsRouter);
 
 // Project Managment
 const projectsRouter = require("./routes/ProjectManagment/projects");
