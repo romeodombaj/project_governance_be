@@ -10,9 +10,8 @@ router.get("/", (req, res) => {
 router.post("/add", (req, res) => {
   let data = req.body;
   const date = new Date();
-  let currentDate = date.getDay() + "-";
-  currentDate += date.getMonth() + "-";
-  currentDate += date.getFullYear();
+  let currentDate =
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
   data = {
     body: {

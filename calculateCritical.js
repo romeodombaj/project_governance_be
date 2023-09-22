@@ -1,4 +1,4 @@
-const calculateCriticalPath = async (originalArray) => {
+const calculateCriticalPath = async (originalArray, projectStartDate) => {
   let activityArray = JSON.parse(JSON.stringify(originalArray));
 
   let doneArray = [];
@@ -25,7 +25,48 @@ const calculateCriticalPath = async (originalArray) => {
   doneArray = late.doneArray;
   currentDuration = late.currentDuration;
 
+  activityArray = await calculateDates(activityArray, projectStartDate);
+
   return activityArray;
+};
+
+//start finish dates
+
+const calculateDates = (array, projectStartDate) => {
+  for (let i in array) {
+    let startDate = new Date(projectStartDate);
+    let finishDate = new Date(projectStartDate);
+
+    startDate.setDate(startDate.getDate() + array[i].earlyStartTime * 7);
+
+    finishDate.setDate(finishDate.getDate() + array[i].lastFinishTime * 7);
+
+    console.log(startDate.getDate());
+    console.log(startDate.getMonth());
+
+    const stringStartDate =
+      startDate.getFullYear() +
+      "-" +
+      (startDate.getMonth() + 1) +
+      "-" +
+      startDate.getDate();
+
+    console.log(stringStartDate);
+
+    array[i] = {
+      ...array[i],
+      startDate: stringStartDate,
+
+      finishDate:
+        finishDate.getFullYear() +
+        "-" +
+        (finishDate.getMonth() + 1) +
+        "-" +
+        finishDate.getDate(),
+    };
+  }
+
+  return array;
 };
 
 /// FORWARDS

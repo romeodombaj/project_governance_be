@@ -16,24 +16,28 @@ router.get("/:id", (req, res) => {
 
 router.post("/add", async (req, res) => {
   const body = req.body;
+  const features = body.featureList;
+  const startDate = new Date(body.startDate);
   let originalArray = [];
 
-  const projectId = body[0].projectId;
+  const projectId = features[0].projectId;
 
-  for (let x in body) {
+  for (let x in features) {
     originalArray.push({
-      featureId: body[x]._id,
-      i: body[x].name,
+      featureId: features[x]._id,
+      i: features[x].name,
+      featureIndex: parseInt(x),
+      finished: false,
       predecessors: [
-        ...body[x].conditions.split(",").filter((el) => el !== ""),
+        ...features[x].conditions.split(",").filter((el) => el !== ""),
       ],
-      duration: parseInt(body[x].duration),
-      skill: body[x].skill,
-      employees: body[x].employees,
+      duration: parseInt(features[x].duration),
+      skill: features[x].skill,
+      employees: features[x].employees,
     });
   }
 
-  const calculatedArray = await calculateCriticalPath(originalArray);
+  const calculatedArray = await calculateCriticalPath(originalArray, startDate);
 
   await calculatedArray.reverse();
 
@@ -41,6 +45,7 @@ router.post("/add", async (req, res) => {
     body: {
       projectId: projectId,
       calculatedArray: calculatedArray,
+      startDate: startDate,
     },
   };
 
