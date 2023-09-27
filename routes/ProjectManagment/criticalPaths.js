@@ -34,6 +34,7 @@ router.post("/add", async (req, res) => {
       duration: parseInt(features[x].duration),
       skill: features[x].skill,
       employees: features[x].employees,
+      delay: 0,
     });
   }
 
